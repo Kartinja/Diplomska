@@ -1,0 +1,11 @@
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\service\impl\IngredientServiceImpl.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\VezhbajApplication.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\repository\IngredientJpaRepository.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\service\impl\RecipeServiceImpl.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\service\RecipeService.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\repository\model\Ingredient.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\rest\RecipeController.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\service\IngredientService.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\repository\model\Recipe.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\repository\RecipeJpaRepository.java
+D:\spring\Diplomska\src\main\java\com\example\vezhbaj\rest\IngredientController.java

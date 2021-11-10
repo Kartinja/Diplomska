@@ -1,0 +1,11 @@
+com\example\vezhbaj\repository\IngredientJpaRepository.class
+com\example\vezhbaj\service\IngredientService.class
+com\example\vezhbaj\rest\RecipeController.class
+com\example\vezhbaj\repository\model\Ingredient.class
+com\example\vezhbaj\repository\RecipeJpaRepository.class
+com\example\vezhbaj\repository\model\Recipe.class
+com\example\vezhbaj\service\impl\IngredientServiceImpl.class
+com\example\vezhbaj\rest\IngredientController.class
+com\example\vezhbaj\VezhbajApplication.class
+com\example\vezhbaj\service\impl\RecipeServiceImpl.class
+com\example\vezhbaj\service\RecipeService.class
