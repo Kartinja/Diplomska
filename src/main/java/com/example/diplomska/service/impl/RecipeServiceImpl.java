@@ -38,11 +38,13 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.setName(recipeName);
         recipe.setText(recipeText);
         List<Ingredient> ingredients = new ArrayList<>();
-        for (int i = 0; i < ingredient.size(); i++) {
-            if(ingredientJpaRepository.existsByName(ingredient.get(i).getName())){
-               ingredients.add(ingredientJpaRepository.getByName(ingredient.get(i).getName()));
+        for (Ingredient value : ingredient) {
+            if (ingredientJpaRepository.existsByName(value.getName())) {
+                ingredients.add(ingredientJpaRepository.getByName(value.getName()));
+            } else {
+                ingredientJpaRepository.save(value);
+                ingredients.add(value);
             }
-            ingredients.add(ingredient.get(i));
         }
         recipe.setIngredients(ingredients);
         return recipeJpaRepository.save(recipe);

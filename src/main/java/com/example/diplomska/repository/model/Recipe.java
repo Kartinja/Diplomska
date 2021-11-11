@@ -1,8 +1,10 @@
 package com.example.diplomska.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@DynamicInsert
 public class Recipe {
     @Id
     @GeneratedValue
@@ -18,6 +21,6 @@ public class Recipe {
     private String name;
     private String text;
     @ManyToMany
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonMerge
     private List<Ingredient> ingredients;
 }

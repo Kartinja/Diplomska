@@ -32,9 +32,9 @@ public class IngredientServiceImpl implements IngredientService {
         return ingredientJpaRepository.getById(id);
     }
 
-    @Override
+    /*@Override
     public List<Ingredient> findAllByRecipeId(Long id) {
         return ingredientJpaRepository.findAllByRecipeId(id);
-    }
+    }*/
 
 }

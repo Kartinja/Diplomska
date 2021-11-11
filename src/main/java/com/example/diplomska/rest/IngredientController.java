@@ -21,12 +21,11 @@ public class IngredientController {
     public List<Ingredient> getAll() {
         return ingredientService.getAll();
     }
-
-    @GetMapping("/recipe/{id}")
+/*    @GetMapping("/recipe/{id}")
     public List<Ingredient> getIngredientsInRecipe(@PathVariable Long id) {
 
         return ingredientService.findAllByRecipeId(id);
-    }
+    }*/
 
     @PostMapping("")
     public IngredientResponseDto create(@RequestBody IngredientRequestDto ingredientRequestDto) {

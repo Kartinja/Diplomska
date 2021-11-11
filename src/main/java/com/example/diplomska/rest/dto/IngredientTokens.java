@@ -12,9 +12,9 @@ import java.util.List;
 public class IngredientTokens {
     private int numTokens;
     private List<Object> otherTags;
-    private boolean removed;
+    private Object removed;
     private int start;
     private String tag;
-    private boolean updated;
+    private Object updated;
     private String word;
 }

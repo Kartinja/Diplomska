@@ -11,5 +11,5 @@ public interface IngredientService {
 
     Ingredient get(long id);
 
-    List<Ingredient> findAllByRecipeId(Long id);
+    //List<Ingredient> findAllByRecipeId(Long id);
 }
