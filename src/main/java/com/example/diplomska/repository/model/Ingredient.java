@@ -2,9 +2,11 @@ package com.example.diplomska.repository.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Table
@@ -12,8 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Ingredient {
-    //@GeneratedValue
-    //private long id;
     @Id
     private String name;
     private String url;

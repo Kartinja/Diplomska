@@ -4,10 +4,14 @@ import com.example.diplomska.repository.model.Recipe;
 import com.example.diplomska.rest.converters.RecipeConverter;
 import com.example.diplomska.rest.dto.RecipeRequestDto;
 import com.example.diplomska.rest.dto.RecipeResponseDto;
-import com.example.diplomska.service.IngredientService;
+import com.example.diplomska.rest.dto.TokensRequestDto;
 import com.example.diplomska.service.RecipeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,27 +22,39 @@ import java.util.stream.Collectors;
 public class RecipeController {
     private RecipeService recipeService;
     private RecipeConverter recipeConverter;
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+
 
     @GetMapping("")
-    public List<RecipeResponseDto> getAll(){
+    public List<RecipeResponseDto> getAll() {
         return recipeService.getAll().stream().map(recipeConverter::from).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public RecipeResponseDto getRecipe(@PathVariable long id){
+    public RecipeResponseDto getRecipe(@PathVariable long id) {
         Recipe recipe = recipeService.get(id);
         return recipeConverter.from(recipe);
     }
 
     @PostMapping("")
-    public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto){
-        Recipe recipe = recipeService.create(recipeRequestDto.getName(), recipeRequestDto.getText(),recipeRequestDto.getIngredients());
+    public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto) {
+        String url = "http://foodviz.env4health.finki.ukim.mk/predict?text="
+                +recipeRequestDto.getText()+"&model=bioBert-standard-model-foodon-e100-0.0005.bin";
+
+        TokensRequestDto tokensRequestDto = webClientBuilder.build()
+                .get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(TokensRequestDto.class).block();
+
+        Recipe recipe = recipeService.create(recipeRequestDto.getName(), recipeRequestDto.getText(), tokensRequestDto);
 
         return recipeConverter.from(recipe);
     }
 
     @DeleteMapping("/{id}")
-    public RecipeResponseDto delete(@PathVariable long id){
+    public RecipeResponseDto delete(@PathVariable long id) {
         Recipe recipe = recipeService.delete(id);
         return recipeConverter.from(recipe);
     }

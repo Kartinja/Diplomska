@@ -2,16 +2,18 @@ package com.example.diplomska.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
-public class IngredientTokens {
+public class IngredientToken {
     private int numTokens;
-    private List<Object> otherTags;
+    private otherTagsDto otherTags;
     private Object removed;
     private int start;
     private String tag;
