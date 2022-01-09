@@ -1,5 +1,6 @@
 package com.example.diplomska.repository.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +14,15 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Ingredient {
     @Id
     private String name;
-    private String url;
+    private Float protein;
+    private Float fat;
+    private Float Carbohydrate;
+    private Float Energy;
+
     @ManyToMany
     private List<Recipe> recipe;
 }

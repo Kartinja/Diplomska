@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IngredientConverter {
-    public IngredientResponseDto from(Ingredient ingredient){
-        return new IngredientResponseDto(ingredient.getName(),ingredient.getUrl()
+    public IngredientResponseDto from(Ingredient ingredient) {
+        return new IngredientResponseDto(ingredient.getName(), ingredient.getProtein(),
+                ingredient.getFat(), ingredient.getCarbohydrate(), ingredient.getEnergy()
         );
     }
 }

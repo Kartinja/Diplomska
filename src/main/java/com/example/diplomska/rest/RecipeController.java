@@ -6,12 +6,11 @@ import com.example.diplomska.rest.dto.RecipeRequestDto;
 import com.example.diplomska.rest.dto.RecipeResponseDto;
 import com.example.diplomska.rest.dto.TokensRequestDto;
 import com.example.diplomska.service.RecipeService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +21,7 @@ import java.util.stream.Collectors;
 public class RecipeController {
     private RecipeService recipeService;
     private RecipeConverter recipeConverter;
-    @Autowired
-    private WebClient.Builder webClientBuilder;
+
 
 
     @GetMapping("")
@@ -39,17 +37,7 @@ public class RecipeController {
 
     @PostMapping("")
     public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto) {
-        String url = "http://foodviz.env4health.finki.ukim.mk/predict?text="
-                +recipeRequestDto.getText()+"&model=bioBert-standard-model-foodon-e100-0.0005.bin";
-
-        TokensRequestDto tokensRequestDto = webClientBuilder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(TokensRequestDto.class).block();
-
-        Recipe recipe = recipeService.create(recipeRequestDto.getName(), recipeRequestDto.getText(), tokensRequestDto);
-
+        Recipe recipe = recipeService.create(recipeRequestDto);
         return recipeConverter.from(recipe);
     }
 

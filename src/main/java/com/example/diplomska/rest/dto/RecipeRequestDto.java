@@ -1,11 +1,10 @@
 package com.example.diplomska.rest.dto;
 
-import com.example.diplomska.repository.model.Ingredient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+
 
 @AllArgsConstructor
 @Getter

@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>vezhbaj</artifactId>
+    <artifactId>diplomska</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>vezhbaj</name>
-    <description>vezhbaj</description>
+    <name>diplomska</name>
+    <description>diplomska</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -47,6 +47,14 @@
             <version>1.0.1.RELEASE</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -72,6 +80,7 @@
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -4,21 +4,20 @@ import com.example.diplomska.repository.IngredientJpaRepository;
 import com.example.diplomska.repository.RecipeJpaRepository;
 import com.example.diplomska.repository.model.Ingredient;
 import com.example.diplomska.repository.model.Recipe;
-import com.example.diplomska.rest.dto.IngredientToken;
-import com.example.diplomska.rest.dto.TokensRequestDto;
+import com.example.diplomska.rest.dto.*;
 import com.example.diplomska.service.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
     private RecipeJpaRepository recipeJpaRepository;
     private IngredientJpaRepository ingredientJpaRepository;
+    private RestTemplate restTemplate;
 
     @Override
     public List<Recipe> getAll() {
@@ -36,32 +35,61 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe create(String recipeName, String recipeText, TokensRequestDto tokensRequestDto) {
+    public Recipe create(RecipeRequestDto recipeRequestDto) {
         Recipe recipe = new Recipe();
-        recipe.setName(recipeName);
-        recipe.setText(recipeText);
-        List<Ingredient> ingredientList = new ArrayList<>();
+        recipe.setName(recipeRequestDto.getName());
+        recipe.setText(recipeRequestDto.getText());
+        Set<Ingredient> ingredientSetList = new LinkedHashSet<>();
 
-        for (IngredientToken ingredientToken:tokensRequestDto.getTokens()) {
-            if(ingredientToken.getOtherTags()!=null){
+
+        String urlFinki = "http://foodviz.env4health.finki.ukim.mk/predict?text="
+                + recipeRequestDto.getText() + "&model=bioBert-standard-model-foodon-e100-0.0005.bin";
+
+        TokensRequestDto tokensRequestDto = restTemplate.getForObject(urlFinki, TokensRequestDto.class);
+
+        //Gi vadam koi se ingredients od od tekstot
+        for (IngredientToken ingredientToken : Objects.requireNonNull(tokensRequestDto).getTokens()) {
+            if (ingredientToken.getOtherTags() != null) {
                 Ingredient ingredient = new Ingredient();
-                ingredient.setName(ingredientToken.getWord().toString());
-                String url = "https://lookup.dbpedia.org/api/search?maxResults=10&format=JSON&query="+ingredient.getName();
-                ingredient.setUrl(url);
-                ingredientList.add(ingredient);
+                ingredient.setName(ingredientToken.getWord());
+                ingredientSetList.add(ingredient);
+
             }
         }
 
-        List<Ingredient> ingredients = new ArrayList<>();
-        for (Ingredient value : ingredientList) {
-            if (ingredientJpaRepository.existsByName(value.getName())) {
-                ingredients.add(ingredientJpaRepository.getByName(value.getName()));
+        List<Ingredient> ingredientList = new ArrayList<>();
+        for (Ingredient ingredient : ingredientSetList) {
+            //ako postoi vo baza ingredient dodadi go vo listata
+            if (ingredientJpaRepository.existsByName(ingredient.getName())) {
+                ingredient = ingredientJpaRepository.getByName(ingredient.getName());
+
+
+
             } else {
-                ingredientJpaRepository.save(value);
-                ingredients.add(value);
+                //ako ne postoi vo baza
+                String urlUsda = "https://api.nal.usda.gov/fdc/v1/foods/search?query=" + ingredient.getName() + "&pageSize=2&api_key=pfmU6uLGv9pUvJz9oocLidkY8cKDxLsV27c9cn7t";
+                UsdaResponseDto usdaResponseDto = restTemplate.getForObject(urlUsda, UsdaResponseDto.class);
+
+                List<FoodNutrientDto> foodNutrients = usdaResponseDto.getFoods().get(0).getFoodNutrients();
+                for (FoodNutrientDto foodNutrient : foodNutrients) {
+                    if (foodNutrient.getNutrientName().toLowerCase().contains("protein")) {
+                        ingredient.setProtein(foodNutrient.getValue());
+                    }
+                    if (foodNutrient.getNutrientName().toLowerCase(Locale.ROOT).contains("carbohydrate")) {
+                        ingredient.setCarbohydrate(foodNutrient.getValue());
+                    }
+                    if (foodNutrient.getNutrientName().toLowerCase(Locale.ROOT).contains("fat")) {
+                        ingredient.setFat(foodNutrient.getValue());
+                    }
+                    if (foodNutrient.getNutrientName().toLowerCase(Locale.ROOT).contains("energy")) {
+                        ingredient.setEnergy(foodNutrient.getValue());
+                    }
+                }
+                ingredientJpaRepository.save(ingredient);
             }
+            ingredientList.add(ingredient);
         }
-        recipe.setIngredients(ingredients);
+        recipe.setIngredients(ingredientList);
         return recipeJpaRepository.save(recipe);
     }
 

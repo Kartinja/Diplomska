@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UsdaRequestDto {
+public class UsdaResponseDto {
     int totalHits;
     int currentPage;
     int totalPages;

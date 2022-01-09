@@ -9,6 +9,10 @@ import lombok.Setter;
 @Setter
 public class IngredientResponseDto {
     private String name;
-    private String url;
+    private Float protein;
+    private Float fat;
+    private Float Carbohydrate;
+    private Float Energy;
+    //private String url;
 
 }
