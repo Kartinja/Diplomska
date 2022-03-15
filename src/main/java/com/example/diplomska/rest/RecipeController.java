@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/recipe")
 public class RecipeController {
     private RecipeService recipeService;
     private RecipeConverter recipeConverter;
-
 
 
     @GetMapping("")

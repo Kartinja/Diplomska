@@ -41,7 +41,6 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.setText(recipeRequestDto.getText());
         Set<Ingredient> ingredientSetList = new LinkedHashSet<>();
 
-
         String urlFinki = "http://foodviz.env4health.finki.ukim.mk/predict?text="
                 + recipeRequestDto.getText() + "&model=bioBert-standard-model-foodon-e100-0.0005.bin";
 
@@ -53,7 +52,6 @@ public class RecipeServiceImpl implements RecipeService {
                 Ingredient ingredient = new Ingredient();
                 ingredient.setName(ingredientToken.getWord());
                 ingredientSetList.add(ingredient);
-
             }
         }
 
@@ -62,8 +60,6 @@ public class RecipeServiceImpl implements RecipeService {
             //ako postoi vo baza ingredient dodadi go vo listata
             if (ingredientJpaRepository.existsByName(ingredient.getName())) {
                 ingredient = ingredientJpaRepository.getByName(ingredient.getName());
-
-
 
             } else {
                 //ako ne postoi vo baza
