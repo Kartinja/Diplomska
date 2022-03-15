@@ -54,6 +54,9 @@ public class RecipeServiceImpl implements RecipeService {
                 ingredientSetList.add(ingredient);
             }
         }
+        if(ingredientSetList.isEmpty()){
+            throw new Error("The recipe you add must contain ingredients.");
+        }
 
         List<Ingredient> ingredientList = new ArrayList<>();
         for (Ingredient ingredient : ingredientSetList) {
