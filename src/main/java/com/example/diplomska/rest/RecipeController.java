@@ -23,17 +23,21 @@ public class RecipeController {
     private RecipeService recipeService;
     private RecipeConverter recipeConverter;
 
-
     @GetMapping("")
     public List<RecipeResponseDto> getAll() {
         return recipeService.getAll().stream().map(recipeConverter::from).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public RecipeResponseDto getRecipe(@PathVariable long id) {
-        Recipe recipe = recipeService.get(id);
-        return recipeConverter.from(recipe);
+    @GetMapping("/{ingredientName}")
+    public List<RecipeResponseDto> getByIngredientName(@PathVariable String ingredientName){
+        return recipeService.findByIngredient(ingredientName).stream().map(recipeConverter::from).collect(Collectors.toList());
     }
+
+//    @GetMapping("/{id}")
+//    public RecipeResponseDto getRecipe(@PathVariable long id) {
+//        Recipe recipe = recipeService.get(id);
+//        return recipeConverter.from(recipe);
+//    }
 
     @PostMapping("")
     public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto) {

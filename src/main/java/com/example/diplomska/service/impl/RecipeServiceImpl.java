@@ -98,4 +98,9 @@ public class RecipeServiceImpl implements RecipeService {
         recipeJpaRepository.delete(recipe);
         return recipe;
     }
+
+    @Override
+    public List<Recipe> findByIngredient(String name) {
+        return recipeJpaRepository.findAllByIngredient(name);
+    }
 }

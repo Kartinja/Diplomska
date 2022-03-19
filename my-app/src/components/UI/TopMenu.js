@@ -1,13 +1,14 @@
 import React from 'react';
 import './w3.css';
 import './TopMenu.css';
-
+import SearchByIngredient from "./SearchByIngredient";
 
 const TopMenu = () => {
 
     function w3_open() {
         document.getElementById("mySidebar").style.display = "block";
     }
+
     function addRecipeOpen() {
         document.getElementById("addRecipe").style.display = "block";
         w3_close();
@@ -16,7 +17,6 @@ const TopMenu = () => {
     function w3_close() {
         document.getElementById("mySidebar").style.display = "none";
     }
-
 
     return (
         <div>
@@ -28,7 +28,9 @@ const TopMenu = () => {
             <div className="w3-top">
                 <div className="w3-white w3-xlarge" style={{"max-width": "1200px", "margin": "auto"}}>
                     <button className="w3-button w3-padding-16 w3-left" onClick={w3_open}>☰</button>
-                    <div className="w3-right w3-padding-16">Mail</div>
+                    <div className="w3-right w3-padding-16">
+                        <SearchByIngredient/>
+                    </div>
                     <div className="w3-center w3-padding-16">My Food</div>
                 </div>
             </div>

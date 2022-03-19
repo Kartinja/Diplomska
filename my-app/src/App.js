@@ -2,12 +2,13 @@ import TopMenu from "./components/UI/TopMenu";
 import React, {useState, useEffect, useCallback} from "react";
 import RecipeList from "./components/recipe/RecipeList";
 import "./components/recipe/recipes.css"
-import AddRecipe from "./components/newRecipe/AddRecipe";
+import AddRecipe from "./components/recipe/newRecipe/AddRecipe";
 
 const App = () => {
     const [recipes, setRecipes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isRecipeValid, setIsRecipeValid] = useState(true);
 
     const fetchRecipeHandler = useCallback(async () => {
         setIsLoading(true);
@@ -38,14 +39,19 @@ const App = () => {
     }, [fetchRecipeHandler]);
 
     async function addRecipeHandler(recipe) {
-        await fetch('http://localhost:8080/recipe', {
+        const response = await fetch('http://localhost:8080/recipe', {
             method: 'POST',
             body: JSON.stringify(recipe),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
+        if (!response.ok) {
+            setIsRecipeValid(false);
+            return;
+        }
         await fetchRecipeHandler();
+        setIsRecipeValid(true);
     }
 
     let content = <p>Found no recipes.</p>;
@@ -65,7 +71,8 @@ const App = () => {
             <TopMenu/>
             <div className={"w3-main w3-content w3-padding"} style={{"max-width": "1200px", "margin-top": "100px"}}>
                 <section>
-                    <AddRecipe onAddRecipe={addRecipeHandler}/>
+                    <AddRecipe onAddRecipe={addRecipeHandler} isRecipeValid={isRecipeValid}/>
+                    {!isRecipeValid && <p>There must be ingredients in the recipe you try to add.</p>}
                 </section>
                 <div className={"w3-row-padding w3-padding-16 w3-center"}>
                     {content}

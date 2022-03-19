@@ -12,7 +12,6 @@ function AddRecipe(props) {
             name: nameRef.current.value,
             text: recipeTextRef.current.value
         };
-
         props.onAddRecipe(recipe);
     }
     function addRecipeClose() {
@@ -30,8 +29,10 @@ function AddRecipe(props) {
                     <label htmlFor='opening-text'>Recipe Text</label>
                     <textarea style={{"resize": "none"}} rows='10' id='opening-text' ref={recipeTextRef}/>
                 </div>
-                <button onClick={addRecipeClose} id="addRecipeBtn" style={{"padding":"8px","width":"10%"}}>Add Recipe</button>
-                <button id="addAnotherRecipeBtn" style={{"padding":"8px"}}>Add Another Recipe</button>
+                <button onClick={addRecipeClose} id="addRecipeBtn" style={{"padding": "8px", "width": "10%"}}>Add
+                    Recipe
+                </button>
+                <button id="addAnotherRecipeBtn" style={{"padding": "8px"}}>Add Another Recipe</button>
             </div>
         </form>
     );
