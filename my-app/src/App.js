@@ -69,7 +69,7 @@ const App = () => {
     return (
         <div>
             <TopMenu/>
-            <div className={"w3-main w3-content w3-padding"} style={{"max-width": "1200px", "margin-top": "100px"}}>
+            <div className={"w3-main w3-content w3-padding"} style={{"maxWidth": "1200px", "marginTop": "100px"}}>
                 <section>
                     <AddRecipe onAddRecipe={addRecipeHandler} isRecipeValid={isRecipeValid}/>
                     {!isRecipeValid && <p>There must be ingredients in the recipe you try to add.</p>}
