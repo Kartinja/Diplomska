@@ -3,17 +3,18 @@ import React, {useState, useEffect, useCallback} from "react";
 import RecipeList from "./components/recipe/RecipeList";
 import "./components/recipe/recipes.css"
 import AddRecipe from "./components/recipe/newRecipe/AddRecipe";
+import {Route} from "react-router-dom";
 
 const App = () => {
     const [recipes, setRecipes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const handleCallbackTopMenu =  (ingredientInputRef) => {
+    const handleCallbackTopMenu = (ingredientInputRef) => {
         searchBy(ingredientInputRef);
     }
 
-    const handleCallbackAddRecipe =  () => {
+    const handleCallbackAddRecipe = () => {
         fetchRecipeHandler();
     }
 
@@ -87,16 +88,20 @@ const App = () => {
     return (
         <div>
             <TopMenu onParentCallback={handleCallbackTopMenu}/>
-            <div className={"w3-main w3-content w3-padding"} style={{"maxWidth": "1200px", "marginTop": "100px"}}>
-                <section>
-                    {/*<AddRecipe onParentCallback={handleCallbackAddRecipe} isRecipeValid={isRecipeValid}/>*/}
-                    <AddRecipe onParentCallback={handleCallbackAddRecipe}/>
-                    {/*{!isRecipeValid && <p>There must be ingredients in the recipe you are trying to add.</p>}*/}
-                </section>
-                <div className={"w3-row-padding w3-padding-16 w3-center"}>
-                    {content}
+            <Route path="/MyFood">
+                <div className={"w3-main w3-content w3-padding"}
+                     style={{"maxWidth": "1200px", "marginTop": "100px"}}>
+                    <section>
+                        <AddRecipe onParentCallback={handleCallbackAddRecipe}/>
+                    </section>
+                    <div className={"w3-row-padding w3-padding-16 w3-center"}>
+                        {content}
+                    </div>
                 </div>
-            </div>
+            </Route>
+            <Route path="/recipe">
+                <p1>recipe</p1>
+            </Route>
         </div>
     );
 }
