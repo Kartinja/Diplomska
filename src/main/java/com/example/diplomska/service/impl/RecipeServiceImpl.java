@@ -54,7 +54,7 @@ public class RecipeServiceImpl implements RecipeService {
                 ingredientSetList.add(ingredient);
             }
         }
-        if(ingredientSetList.isEmpty()){
+        if (ingredientSetList.isEmpty()) {
             throw new Error("The recipe you add must contain ingredients.");
         }
 
@@ -90,6 +90,11 @@ public class RecipeServiceImpl implements RecipeService {
         }
         recipe.setIngredients(ingredientList);
         return recipeJpaRepository.save(recipe);
+    }
+
+    @Override
+    public Recipe findByNameAndIngredient(RecipeRequestDto recipeRequestDto) {
+        return recipeJpaRepository.findByNameAndText(recipeRequestDto.getName(), recipeRequestDto.getText());
     }
 
     @Override

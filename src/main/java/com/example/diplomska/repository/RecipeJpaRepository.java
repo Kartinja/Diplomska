@@ -11,4 +11,6 @@ public interface RecipeJpaRepository extends JpaRepository<Recipe, Long> {
     //@Query(value = "SELECT recipe from Recipe recipe, Ingredient ingredient WHERE ingredient.name=:name AND ingredient IN (select r.ingredients from Recipe r)")
     @Query(value = "select recipe from Recipe recipe left join recipe.ingredients ingredients where ingredients.name=:name")
     List<Recipe> findAllByIngredient(@Param("name") String name);
+
+    Recipe findByNameAndText(String name, String text);
 }

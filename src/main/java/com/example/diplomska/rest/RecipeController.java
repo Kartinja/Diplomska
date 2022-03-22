@@ -4,13 +4,9 @@ import com.example.diplomska.repository.model.Recipe;
 import com.example.diplomska.rest.converters.RecipeConverter;
 import com.example.diplomska.rest.dto.RecipeRequestDto;
 import com.example.diplomska.rest.dto.RecipeResponseDto;
-import com.example.diplomska.rest.dto.TokensRequestDto;
 import com.example.diplomska.service.RecipeService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,11 +29,17 @@ public class RecipeController {
         return recipeService.findByIngredient(ingredientName).stream().map(recipeConverter::from).collect(Collectors.toList());
     }
 
-//    @GetMapping("/{id}")
-//    public RecipeResponseDto getRecipe(@PathVariable long id) {
+//    @GetMapping("/recipeId")
+//    public RecipeResponseDto getRecipe(@RequestParam(name = "id") long id) {
 //        Recipe recipe = recipeService.get(id);
 //        return recipeConverter.from(recipe);
 //    }
+
+    @GetMapping("/by")
+    public RecipeResponseDto getRecipe(@ModelAttribute RecipeRequestDto recipeRequestDto) {
+        Recipe recipe = recipeService.findByNameAndIngredient(recipeRequestDto);
+        return recipeConverter.from(recipe);
+    }
 
     @PostMapping("")
     public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto) {

@@ -15,6 +15,9 @@ public interface RecipeService {
 
     Recipe create(RecipeRequestDto recipeRequestDto);
 
+    Recipe findByNameAndIngredient(RecipeRequestDto recipeRequestDto);
+
     Recipe delete(long id);
+
     List<Recipe> findByIngredient(String name);
 }
