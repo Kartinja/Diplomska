@@ -102,7 +102,7 @@ const App = () => {
             <div className={"w3-main w3-content w3-padding"} style={{"maxWidth": "1200px", "marginTop": "100px"}}>
                 <section>
                     <AddRecipe onAddRecipe={addRecipeHandler} isRecipeValid={isRecipeValid}/>
-                    {!isRecipeValid && <p>There must be ingredients in the recipe you try to add.</p>}
+                    {!isRecipeValid && <p>There must be ingredients in the recipe you are trying to add.</p>}
                 </section>
                 <div className={"w3-row-padding w3-padding-16 w3-center"}>
                     {content}
