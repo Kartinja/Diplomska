@@ -4,9 +4,7 @@ import './TopMenu.css';
 import SearchByIngredient from "./SearchByIngredient";
 
 const TopMenu = (props) => {
-    const [searchByIngredient, setSearchByIngredient] = useState('');
     const handleCallback = (ingredientInputRef) => {
-        // setSearchByIngredient(ingredientInputRef);
         childToParent(ingredientInputRef);
     }
     const childToParent = (ingredientInputRef) => {

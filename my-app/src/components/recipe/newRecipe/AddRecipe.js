@@ -1,9 +1,29 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import classes from './AddRecipe.module.css';
 
 function AddRecipe(props) {
     const nameRef = useRef('');
     const recipeTextRef = useRef('');
+    const [isRecipeValid, setIsRecipeValid] = useState(true);
+
+    async function addRecipeHandler(recipe) {
+        const response = await fetch('http://localhost:8080/recipe', {
+            method: 'POST',
+            body: JSON.stringify(recipe),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            setIsRecipeValid(false);
+            return;
+        }
+        childToParent();
+        setIsRecipeValid(true);
+    }
+    const childToParent = () => {
+        props.onParentCallback(true);
+    }
 
     function submitHandler(event) {
         event.preventDefault();
@@ -12,7 +32,7 @@ function AddRecipe(props) {
             name: nameRef.current.value,
             text: recipeTextRef.current.value
         };
-        props.onAddRecipe(recipe);
+        addRecipeHandler(recipe);
     }
     function addRecipeClose() {
         document.getElementById("addRecipe").style.display = "none";
@@ -33,6 +53,7 @@ function AddRecipe(props) {
                     Recipe
                 </button>
                 <button id="addAnotherRecipeBtn" style={{"padding": "8px"}}>Add Another Recipe</button>
+                {!isRecipeValid && <p>There must be ingredients in the recipe you are trying to add.</p>}
             </div>
         </form>
     );
