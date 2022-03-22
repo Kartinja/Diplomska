@@ -6,21 +6,21 @@ const SearchByIngredient = (props) => {
     const ingredientInputRef = useRef('');
     const [error, setError] = useState(null);
 
-    const formSubmissionHandler = async event => {
+    const formSubmissionHandler =  event => {
         event.preventDefault();
-        const enteredValue = ingredientInputRef.current.value;
-        enteredValue.trim();
-        try {
-            const response = await fetch("http://localhost:8080/recipe/" + enteredValue);
-            if (!response.ok) {
-                throw new Error("Something went wrong");
-            }
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            setError(error.message);
-        }
-
+        props.parentCallBack(ingredientInputRef.current.value);
+        // const enteredValue = ingredientInputRef.current.value;
+        // enteredValue.trim();
+        // try {
+        //     const response = await fetch("http://localhost:8080/recipe/" + enteredValue);
+        //     if (!response.ok) {
+        //         throw new Error("Something went wrong");
+        //     }
+        //     const data = await response.json();
+        //     console.log(data);
+        // } catch (error) {
+        //     setError(error.message);
+        // }
     }
     return (
         <form onSubmit={formSubmissionHandler} className="form">

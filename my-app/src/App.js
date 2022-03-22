@@ -10,11 +10,16 @@ const App = () => {
     const [error, setError] = useState(null);
     const [isRecipeValid, setIsRecipeValid] = useState(true);
 
+    const handleCallback =  (ingredientInputRef) => {
+        searchBy(ingredientInputRef);
+    }
+
     const fetchRecipeHandler = useCallback(async () => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:8080/recipe');
+            const request = 'http://localhost:8080/recipe/';
+            const response = await fetch(request);
             if (!response.ok) {
                 throw new Error('Something went wrong!');
             }
@@ -34,8 +39,33 @@ const App = () => {
         setIsLoading(false);
     }, []);
 
+    const searchBy = async (ingredient) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const request = 'http://localhost:8080/recipe/' + ingredient;
+            const response = await fetch(request);
+            if (!response.ok) {
+                throw new Error('Something went wrong!');
+            }
+
+            const data = await response.json();
+
+            const transformedRecipe = data.map((recipeData) => {
+                return {
+                    title: recipeData.name,
+                    text: recipeData.text
+                };
+            });
+            setRecipes(transformedRecipe);
+        } catch (error) {
+            setError(error.message);
+        }
+        setIsLoading(false);
+    }
+
     useEffect(() => {
-        fetchRecipeHandler();
+        fetchRecipeHandler()
     }, [fetchRecipeHandler]);
 
     async function addRecipeHandler(recipe) {
@@ -68,7 +98,7 @@ const App = () => {
     }
     return (
         <div>
-            <TopMenu/>
+            <TopMenu onParentCallback={handleCallback}/>
             <div className={"w3-main w3-content w3-padding"} style={{"maxWidth": "1200px", "marginTop": "100px"}}>
                 <section>
                     <AddRecipe onAddRecipe={addRecipeHandler} isRecipeValid={isRecipeValid}/>

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './w3.css';
 import './TopMenu.css';
 import SearchByIngredient from "./SearchByIngredient";
 
-const TopMenu = () => {
+const TopMenu = (props) => {
+    const [searchByIngredient, setSearchByIngredient] = useState('');
+    const handleCallback = (ingredientInputRef) => {
+        // setSearchByIngredient(ingredientInputRef);
+        childToParent(ingredientInputRef);
+    }
+    const childToParent = (ingredientInputRef) => {
+        props.onParentCallback(ingredientInputRef);
+    }
 
     function w3_open() {
         document.getElementById("mySidebar").style.display = "block";
@@ -29,7 +37,7 @@ const TopMenu = () => {
                 <div className="w3-white w3-xlarge" style={{"maxWidth": "1200px", "margin": "auto"}}>
                     <button className="w3-button w3-padding-16 w3-left" onClick={w3_open}>☰</button>
                     <div className="w3-right w3-padding-16">
-                        <SearchByIngredient/>
+                        <SearchByIngredient parentCallBack={handleCallback}/>
                     </div>
                     <div className="w3-center w3-padding-16">My Food</div>
                 </div>
