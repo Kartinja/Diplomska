@@ -29,15 +29,10 @@ public class RecipeController {
         return recipeService.findByIngredient(ingredientName).stream().map(recipeConverter::from).collect(Collectors.toList());
     }
 
-//    @GetMapping("/recipeId")
-//    public RecipeResponseDto getRecipe(@RequestParam(name = "id") long id) {
-//        Recipe recipe = recipeService.get(id);
-//        return recipeConverter.from(recipe);
-//    }
 
     @GetMapping("/by")
-    public RecipeResponseDto getRecipe(@ModelAttribute RecipeRequestDto recipeRequestDto) {
-        Recipe recipe = recipeService.findByNameAndIngredient(recipeRequestDto);
+    public RecipeResponseDto getByNameAndText(@ModelAttribute RecipeRequestDto recipeRequestDto) {
+        Recipe recipe = recipeService.findByNameAndText(recipeRequestDto);
         return recipeConverter.from(recipe);
     }
 

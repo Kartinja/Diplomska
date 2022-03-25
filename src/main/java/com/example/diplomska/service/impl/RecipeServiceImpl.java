@@ -93,7 +93,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findByNameAndIngredient(RecipeRequestDto recipeRequestDto) {
+    public Recipe findByNameAndText(RecipeRequestDto recipeRequestDto) {
         return recipeJpaRepository.findByNameAndText(recipeRequestDto.getName(), recipeRequestDto.getText());
     }
 

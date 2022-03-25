@@ -1,12 +1,16 @@
 import image from '../images/download.jpg'
+import {Link} from "react-router-dom";
 import '../UI/w3.css';
-import './recipes.css';
+import './recipe.css';
 
 const Recipe = (props) => {
-    return <div className="w3-quarter" style={{"padding":"8px"}}>
-        <img src={image} alt="Sandwich" style={{"width":"100%"}}/>
-        <h3>{props.title}</h3>
-        <p style={{textAlign:'justify'}}>{props.text}</p>
-    </div>
+    const linkTo = "/recipe-details/" + props.title + "/" + props.text;
+    return (
+        <Link to={linkTo} className="w3-quarter" style={{"padding": "8px"}}>
+            <img src={image} alt="food" style={{"width": "100%"}}/>
+            <h3>{props.title}</h3>
+            <p className={"text"}>{props.text}</p>
+        </Link>
+    );
 }
 export default Recipe;

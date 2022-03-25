@@ -7,6 +7,10 @@ function AddRecipe(props) {
     const [isRecipeValid, setIsRecipeValid] = useState(true);
 
     async function addRecipeHandler(recipe) {
+        if(recipe.name.trim()===''){
+            setIsRecipeValid(false);
+            return;
+        }
         const response = await fetch('http://localhost:8080/recipe', {
             method: 'POST',
             body: JSON.stringify(recipe),
@@ -30,7 +34,7 @@ function AddRecipe(props) {
         // could add validation here...
         const recipe = {
             name: nameRef.current.value,
-            text: recipeTextRef.current.value
+            text: recipeTextRef.current.value.trim()
         };
         addRecipeHandler(recipe);
     }
@@ -53,8 +57,8 @@ function AddRecipe(props) {
                     Recipe
                 </button>
                 <button id="addAnotherRecipeBtn" style={{"padding": "8px"}}>Add Another Recipe</button>
-                {!isRecipeValid && <p>There must be ingredients in the recipe you are trying to add.</p>}
             </div>
+            {!isRecipeValid && <p className="w3-center" style={{color:"red"}}>You must enter name and ingredients in the recipe!</p>}
         </form>
     );
 }

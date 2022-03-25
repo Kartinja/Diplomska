@@ -1,6 +1,7 @@
 import React from 'react';
 import './w3.css';
 import './TopMenu.css';
+import {Link} from "react-router-dom";
 import SearchByIngredient from "./SearchByIngredient";
 
 const TopMenu = (props) => {
@@ -16,8 +17,8 @@ const TopMenu = (props) => {
     }
 
     function addRecipeOpen() {
-        document.getElementById("addRecipe").style.display = "block";
         w3_close();
+        document.getElementById("addRecipe").style.display = "block";
     }
 
     function w3_close() {
@@ -28,8 +29,8 @@ const TopMenu = (props) => {
         <div>
             <nav className="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
                  style={{"display": "none", "zIndex": "2", "width": "40%", "minWidth": "300px"}} id="mySidebar">
-                <a href="/MyFood" className="w3-bar-item w3-button">My Food</a>
-                <button onClick={addRecipeOpen} className="w3-bar-item w3-button">Create New Recipe</button>
+                <Link onClick={w3_close} to="/" className="w3-bar-item w3-button">My Food</Link>
+                <Link to="/" onClick={addRecipeOpen}  className="w3-bar-item w3-button">Create New Recipe</Link>
             </nav>
             <div className="w3-top">
                 <div className="w3-white w3-xlarge" style={{"maxWidth": "1200px", "margin": "auto"}}>
