@@ -1,13 +1,16 @@
 import React, {useRef} from "react";
 import search from '../images/search.png'
 import './searchButton.css';
+import {useHistory} from "react-router-dom";
 
 const SearchByIngredient = (props) => {
     const ingredientInputRef = useRef('');
+    let history = useHistory();
 
-    const formSubmissionHandler =  event => {
+    const formSubmissionHandler = event => {
         event.preventDefault();
-        props.parentCallBack(ingredientInputRef.current.value);
+        history.push("/");
+        props.parentCallBack(ingredientInputRef.current.value)
     }
     return (
         <form onSubmit={formSubmissionHandler} className="form">

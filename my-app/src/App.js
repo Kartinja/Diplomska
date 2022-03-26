@@ -8,6 +8,7 @@ const App = () => {
     const [searchBy, setSearchBy] = useState("");
     const handleCallbackTopMenu = (ingredientInputRef) => {
         setSearchBy(ingredientInputRef);
+        console.log(this.document.location);
     }
 
     return (

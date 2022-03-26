@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
-import RecipeList from "../RecipeList";
+import IngredientList from "./IngredientList";
+
 
 const Ingredients = (props) => {
     const [ingredients, setIngredients] = useState([]);
@@ -32,16 +33,16 @@ const Ingredients = (props) => {
             setError(error.message);
         }
         setIsLoading(false);
-    }, [props.searchBy]);
+    }, [props.recipeName,props.recipeText]);
 
     useEffect(() => {
         fetchIngredientsHandler()
     }, [fetchIngredientsHandler]);
 
-    let content = <p>ingredients</p>;
+    let content = "";
 
     if (ingredients.length > 0) {
-        content = <RecipeList recipes={ingredients}/>;
+        content = <IngredientList ingredients={ingredients}/>;
     }
     if (error) {
         content = <p>{error}</p>
@@ -53,9 +54,7 @@ const Ingredients = (props) => {
 
     return (
         <div>
-            <p>
                 {content}
-            </p>
         </div>
     );
 

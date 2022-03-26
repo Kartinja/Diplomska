@@ -37,6 +37,8 @@ function AddRecipe(props) {
             text: recipeTextRef.current.value.trim()
         };
         addRecipeHandler(recipe);
+        recipeTextRef.current.value="";
+        nameRef.current.value="";
     }
     function addRecipeClose() {
         document.getElementById("addRecipe").style.display = "none";
