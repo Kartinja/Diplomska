@@ -8,6 +8,7 @@ const RecipeList = (props) => {
             {props.recipes.map((recipe) => (
                 <Recipe title={recipe.title}
                         text={recipe.text}
+                        image={recipe.image}
                 />))
             }
         </div>

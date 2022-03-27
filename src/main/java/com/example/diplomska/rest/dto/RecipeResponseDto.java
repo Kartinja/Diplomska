@@ -15,5 +15,6 @@ public class RecipeResponseDto {
     private long id;
     private String name;
     private String text;
+    private byte[] image;
     private List<Ingredient> ingredients;
 }

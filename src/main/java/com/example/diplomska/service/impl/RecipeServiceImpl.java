@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -40,6 +41,13 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.setName(recipeRequestDto.getName());
         recipe.setText(recipeRequestDto.getText());
         Set<Ingredient> ingredientSetList = new LinkedHashSet<>();
+
+        try {
+            recipe.setImage(recipeRequestDto.getImage().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         String urlFinki = "http://foodviz.env4health.finki.ukim.mk/predict?text="
                 + recipeRequestDto.getText() + "&model=bioBert-standard-model-foodon-e100-0.0005.bin";

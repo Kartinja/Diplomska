@@ -20,6 +20,8 @@ public class Recipe {
     private String name;
     @Column(columnDefinition = "varchar")
     private String text;
+    @Lob
+    byte[] image;
     @ManyToMany
     @JsonMerge
     private List<Ingredient> ingredients;

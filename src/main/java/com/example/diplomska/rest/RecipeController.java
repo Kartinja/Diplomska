@@ -8,6 +8,7 @@ import com.example.diplomska.service.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{ingredientName}")
-    public List<RecipeResponseDto> getByIngredientName(@PathVariable String ingredientName){
+    public List<RecipeResponseDto> getByIngredientName(@PathVariable String ingredientName) {
         return recipeService.findByIngredient(ingredientName).stream().map(recipeConverter::from).collect(Collectors.toList());
     }
 
@@ -37,7 +38,7 @@ public class RecipeController {
     }
 
     @PostMapping("")
-    public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto) {
+    public RecipeResponseDto create(@ModelAttribute RecipeRequestDto recipeRequestDto) throws IOException {
         Recipe recipe = recipeService.create(recipeRequestDto);
         return recipeConverter.from(recipe);
     }

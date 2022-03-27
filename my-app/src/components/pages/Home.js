@@ -25,9 +25,12 @@ const Home = (props) => {
             const data = await response.json();
 
             const transformedRecipe = data.map((recipeData) => {
+                const base64Image = 'data:image/png;base64,'+recipeData.image;
+                console.log(recipeData.image);
                 return {
                     title: recipeData.name,
-                    text: recipeData.text
+                    text: recipeData.text,
+                    image: base64Image
                 };
             });
             setRecipes(transformedRecipe);
