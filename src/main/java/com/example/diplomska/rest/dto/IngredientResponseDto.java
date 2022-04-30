@@ -13,6 +13,5 @@ public class IngredientResponseDto {
     private Float fat;
     private Float Carbohydrate;
     private Float Energy;
-    //private String url;
 
 }

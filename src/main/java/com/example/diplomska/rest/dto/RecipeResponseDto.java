@@ -15,6 +15,11 @@ public class RecipeResponseDto {
     private long id;
     private String name;
     private String text;
-    private byte[] image;
+    private String image;
+    private Float fatValue;
+    private Float proteinValue;
+    private Float carbohydrateValue;
+    private Float energyValue;
+
     private List<Ingredient> ingredients;
 }

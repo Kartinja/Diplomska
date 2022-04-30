@@ -76,7 +76,7 @@ public class RecipeServiceImpl implements RecipeService {
                 //ako ne postoi vo baza
                 String urlUsda = "https://api.nal.usda.gov/fdc/v1/foods/search?query=" + ingredient.getName() + "&pageSize=2&api_key=pfmU6uLGv9pUvJz9oocLidkY8cKDxLsV27c9cn7t";
                 UsdaResponseDto usdaResponseDto = restTemplate.getForObject(urlUsda, UsdaResponseDto.class);
-
+                ingredient.setApiID(usdaResponseDto.getFoods().get(0).getFdcId());
                 List<FoodNutrientDto> foodNutrients = usdaResponseDto.getFoods().get(0).getFoodNutrients();
                 for (FoodNutrientDto foodNutrient : foodNutrients) {
                     if (foodNutrient.getNutrientName().toLowerCase().contains("protein")) {

@@ -20,8 +20,10 @@ public class Ingredient {
     private String name;
     private Float protein;
     private Float fat;
-    private Float Carbohydrate;
-    private Float Energy;
+    private Float carbohydrate;
+    private Float energy;
+    private int apiID;
+
 
     @ManyToMany
     private List<Recipe> recipe;

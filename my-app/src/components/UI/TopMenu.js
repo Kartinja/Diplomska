@@ -1,10 +1,11 @@
 import React from 'react';
 import './w3.css';
 import './TopMenu.css';
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
 import SearchByIngredient from "./SearchByIngredient";
 
 const TopMenu = (props) => {
+    let history = useHistory();
     const handleCallback = (ingredientInputRef) => {
         childToParent(ingredientInputRef);
     }
@@ -18,6 +19,7 @@ const TopMenu = (props) => {
 
     function addRecipe() {
         w3_close();
+        history.push("/");
         document.getElementById("addRecipe").style.display = "block";
     }
 

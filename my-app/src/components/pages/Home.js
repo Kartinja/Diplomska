@@ -23,10 +23,13 @@ const Home = (props) => {
             }
 
             const data = await response.json();
+            console.log(response.blob());
 
             const transformedRecipe = data.map((recipeData) => {
-                const base64Image = 'data:image/png;base64,'+recipeData.image;
-                console.log(recipeData.image);
+                //const base64Image = 'data:image/jpeg;base64,'+ recipeData.image;
+                const base64Image = 'data:image/jpeg;base64,'+ recipeData.image;
+                console.log(base64Image);
+                //console.log(recipeData.image);
                 return {
                     title: recipeData.name,
                     text: recipeData.text,

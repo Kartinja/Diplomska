@@ -6,6 +6,7 @@ import RecipeDetails from "./components/recipe/RecipeDetails";
 
 const App = () => {
     const [searchBy, setSearchBy] = useState("");
+    const [isAddRecipeOpen,setIsAddRecipeOpen] = useState(false);
     const handleCallbackTopMenu = (ingredientInputRef) => {
         setSearchBy(ingredientInputRef);
     }

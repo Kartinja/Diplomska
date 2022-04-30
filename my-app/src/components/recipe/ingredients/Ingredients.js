@@ -17,7 +17,6 @@ const Ingredients = (props) => {
             }
 
             const data = await response.json();
-            console.log(data.ingredients);
 
             const ingredients = data.ingredients.map((ingredientData) => {
                 return {

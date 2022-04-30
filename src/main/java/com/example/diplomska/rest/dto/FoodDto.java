@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class FoodDto {
-//    int fdcId;
+    int fdcId;
 //    String description;
 //    String lowercaseDescription;
 //    String dataType;

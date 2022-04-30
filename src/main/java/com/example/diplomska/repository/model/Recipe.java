@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,9 +22,14 @@ public class Recipe {
     private String name;
     @Column(columnDefinition = "varchar")
     private String text;
-    @Lob
-    byte[] image;
+    private Float fatValue;
+    private Float proteinValue;
+    private Float carbohydrateValue;
+    private Float energyValue;
     @ManyToMany
     @JsonMerge
     private List<Ingredient> ingredients;
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 }
