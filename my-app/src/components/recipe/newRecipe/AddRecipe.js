@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import classes from './AddRecipe.module.css';
 import FileUploader from "../../fileHandler/FileUploader";
+import {Alert, Button} from "@mui/material";
 
 function AddRecipe(props) {
     const nameRef = useRef('');
@@ -10,10 +11,6 @@ function AddRecipe(props) {
     const formData = new FormData();
 
     async function addRecipeHandler() {
-        // if (formData.name.trim() === '') {
-        //     setIsRecipeValid(false);
-        //     return;
-        // }
         const response = await fetch('http://localhost:8080/recipe', {
             method: 'POST',
             body: formData,
@@ -39,14 +36,10 @@ function AddRecipe(props) {
     function submitHandler(event) {
         event.preventDefault();
         // could add validation here...
-        formData.append('name',nameRef.current.value);
-        formData.append('text',recipeTextRef.current.value);
+        formData.append('recipeName',nameRef.current.value);
+        formData.append('recipeText',recipeTextRef.current.value);
         formData.append('image',image);
-        // const recipe = {
-        //     name: nameRef.current.value,
-        //     text: recipeTextRef.current.value.trim(),
-        //     image: file
-        // };
+
         addRecipeHandler();
         recipeTextRef.current.value = "";
         nameRef.current.value = "";
@@ -71,13 +64,14 @@ function AddRecipe(props) {
                     <label htmlFor='opening-text'>Recipe Text</label>
                     <textarea style={{"resize": "none"}} rows='10' id='opening-text' ref={recipeTextRef}/>
                 </div>
-                <button onClick={addRecipeClose} id="addRecipeBtn" style={{"padding": "8px", "width": "10%"}}>Add
-                    Recipe
-                </button>
-                <button id="addAnotherRecipeBtn" style={{"padding": "8px"}}>Add Another Recipe</button>
+                <Button type="submit" variant="contained" onClick={addRecipeClose} id="addRecipeBtn" style={{"padding": "8px", "width": "10%",margin:"5px"}}>Add
+                    Recipe</Button>
+                <Button type="submit"  variant="contained" id="addAnotherRecipeBtn" style={{"padding": "8px"}}>Add Another Recipe</Button>
+                <Button variant="outlined" onClick={addRecipeClose} style={{"padding": "8px", "width": "10%",marginLeft:"750px"}}>Close</Button>
             </div>
             {!isRecipeValid &&
-            <p className="w3-center" style={{color: "red"}}>You must enter name and ingredients in the recipe!</p>}
+            <Alert severity="error">You must enter name and ingredients in the recipe!</Alert>}
+
         </form>
     );
 }

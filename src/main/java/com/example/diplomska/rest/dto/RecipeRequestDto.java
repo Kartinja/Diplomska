@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 public class RecipeRequestDto {
-    private String name;
-    private String text;
+    private String recipeName;
+    private String recipeText;
     private MultipartFile image;
 
 }

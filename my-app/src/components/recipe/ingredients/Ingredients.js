@@ -3,22 +3,42 @@ import IngredientList from "./IngredientList";
 
 
 const Ingredients = (props) => {
+    const [recipeName, setRecipeName] = useState();
+    const [carbsRecipeValue, setCarbsRecipeValue] = useState();
+    const [fatRecipeValue, setFatRecipeValue] = useState();
+    const [energyRecipeValue, setEnergyRecipeValue] = useState();
+    const [proteinRecipeValue, setProteinRecipeValue] = useState();
+    const [recipeText, setRecipeText] = useState();
     const [ingredients, setIngredients] = useState([]);
+    const [quantity, setQuantity] = useState(new Map());
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const handleCallbackIngredientList = (isChanged) => {
+        fetchIngredientsHandler();
+    }
+
     const fetchIngredientsHandler = useCallback(async () => {
         setIsLoading(true);
         setError(null);
         try {
-            const request = 'http://localhost:8080/recipe/by?name=' + props.recipeName + "&text=" + props.recipeText;
+            const requestBy = 'http://localhost:8080/recipe/by?recipeName=' + props.recipeName + "&recipeText=" + props.recipeText;
+            const responseBy = await fetch(requestBy);
+            const request = "http://localhost:8080/recipe/quantities?recipeName=" + props.recipeName + "&recipeText=" + props.recipeText;
             const response = await fetch(request);
-            if (!response.ok) {
+            if (!responseBy.ok) {
                 throw new Error('Something went wrong!');
             }
 
-            const data = await response.json();
+            const ingredientsData = await responseBy.json();
+            setProteinRecipeValue(ingredientsData.proteinValue);
+            setFatRecipeValue(ingredientsData.fatValue);
+            setEnergyRecipeValue(ingredientsData.energyValue);
+            setCarbsRecipeValue(ingredientsData.carbohydrateValue);
+            setRecipeName(ingredientsData.name);
+            setRecipeText(ingredientsData.text);
 
-            const ingredients = data.ingredients.map((ingredientData) => {
+            const ingredients = ingredientsData.ingredients.map((ingredientData) => {
                 return {
                     name: ingredientData.name,
                     carbohydrate: ingredientData.carbohydrate,
@@ -28,21 +48,30 @@ const Ingredients = (props) => {
                 };
             });
             setIngredients(ingredients);
+            console.log(ingredients);
+
+            const data = await response.json();
+
+            const ingredientQuantities = data.map((ingredientData) => {
+                return {
+                    name: ingredientData.ingredientName,
+                    quantity: ingredientData.ingredientQuantity
+                };
+            });
+            setQuantity(ingredientQuantities);
         } catch (error) {
             setError(error.message);
         }
         setIsLoading(false);
-    }, [props.recipeName,props.recipeText]);
+    }, [props.recipeName, props.recipeText]);
 
     useEffect(() => {
         fetchIngredientsHandler()
     }, [fetchIngredientsHandler]);
 
+
     let content = "";
 
-    if (ingredients.length > 0) {
-        content = <IngredientList ingredients={ingredients}/>;
-    }
     if (error) {
         content = <p>{error}</p>
     }
@@ -53,7 +82,13 @@ const Ingredients = (props) => {
 
     return (
         <div>
-                {content}
+            {content}
+            {!error && !isLoading &&
+            <div>
+                <IngredientList ingredientQuantity={quantity} ingredients={ingredients} recipeName={recipeName}
+                                recipeText={recipeText} carbs={carbsRecipeValue} fat={fatRecipeValue}
+                                protein={proteinRecipeValue} energy={energyRecipeValue} onParentCallback={handleCallbackIngredientList}/>
+            </div>}
         </div>
     );
 

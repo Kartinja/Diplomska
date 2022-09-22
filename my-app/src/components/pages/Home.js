@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import RecipeList from "../recipe/RecipeList";
 import "../recipe/w3Recipes.css"
 import AddRecipe from "../recipe/newRecipe/AddRecipe";
+import {Alert} from "@mui/material";
 
 const Home = (props) => {
     const [recipes, setRecipes] = useState([]);
@@ -16,20 +17,46 @@ const Home = (props) => {
         setIsLoading(true);
         setError(null);
         try {
-            const request = 'http://localhost:8080/recipe/' + props.searchBy;
+            let request;
+            if (props.searchByCarbs.length === 2) {
+                request = "http://localhost:8080/recipe/carbohydrate/" + props.searchByCarbs[0] + "/" + props.searchByCarbs[1];
+            } else if (props.searchByFat.length === 2) {
+                request = "http://localhost:8080/recipe/fat/" + props.searchByFat[0] + "/" + props.searchByFat[1];
+            } else if (props.searchByProtein.length === 2) {
+                request = "http://localhost:8080/recipe/protein/" + props.searchByProtein[0] + "/" + props.searchByProtein[1];
+            } else if (props.searchByCalories.length === 2) {
+                request = "http://localhost:8080/recipe/calories/" + props.searchByCalories[0] + "/" + props.searchByCalories[1];
+            } else {
+                request = 'http://localhost:8080/recipe/' + props.searchBy;
+            }
+            // if (props.searchByCarbs !== undefined) {
+            //     request = "http://localhost:8080/recipe/carbohydrate/" + props.searchByCarbs[0] + "/" + props.searchByCarbs[1];
+            // }
+            // if (props.searchByFat !== undefined && request !== null) {
+            //     request = "http://localhost:8080/recipe/fat/" + props.searchByFat[0] + "/" + props.searchByFat[1];
+            // }
+            // if (props.searchByProtein !== undefined && request !== null) {
+            //     request = "http://localhost:8080/recipe/protein/" + props.searchByProtein[0] + "/" + props.searchByProtein[1];
+            // }
+            // if (props.searchByCalories !== undefined && request !== null) {
+            //     request = "http://localhost:8080/recipe/calories/" + props.searchByCalories[0] + "/" + props.searchByCalories[1];
+            // } else {
+            //     request = 'http://localhost:8080/recipe/' + props.searchBy;
+            // }
+
+            //const request = 'http://localhost:8080/recipe/' + props.searchBy;
             const response = await fetch(request);
             if (!response.ok) {
                 throw new Error('Something went wrong!');
             }
 
             const data = await response.json();
-            console.log(response.blob());
+            console.log("recipe data")
+            console.log(data);
 
             const transformedRecipe = data.map((recipeData) => {
-                //const base64Image = 'data:image/jpeg;base64,'+ recipeData.image;
-                const base64Image = 'data:image/jpeg;base64,'+ recipeData.image;
-                console.log(base64Image);
-                //console.log(recipeData.image);
+                const base64Image = 'data:image/jpeg;base64,' + recipeData.image;
+
                 return {
                     title: recipeData.name,
                     text: recipeData.text,
@@ -41,14 +68,14 @@ const Home = (props) => {
             setError(error.message);
         }
         setIsLoading(false);
-    }, [props.searchBy]);
+    }, [props.searchBy, props.searchByCalories, props.searchByCarbs, props.searchByFat, props.searchByProtein]);
 
     useEffect(() => {
         fetchRecipeHandler()
     }, [fetchRecipeHandler]);
 
 
-    let content = <p>Found no recipes.</p>;
+    let content = <Alert severity="info">Found no recipes.</Alert>;
 
     if (recipes.length > 0) {
         content = <RecipeList recipes={recipes}/>;

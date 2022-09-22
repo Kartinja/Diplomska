@@ -7,37 +7,49 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import Ingredient from "./Ingredient";
 const IngredientList = (props) => {
+    const handleCallback = (isChanged) => {
+        childToParent(isChanged);
+    }
+    const childToParent = (isChanged) => {
+        props.onParentCallback(isChanged);
+    }
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>100g serving</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.ingredients.map((row) => (
-                        <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.energy}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbohydrate}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
+        <div>
+            {!props.ingredientQuantity &&
+            <p className="w3-center" style={{color: "red"}}>You must enter name and ingredients in the recipe!</p>}
+            {props.ingredientQuantity && <TableContainer component={Paper}>
+                <Table sx={{minWidth: 650}} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Ingredient</TableCell>
+                            <TableCell>Quantity(g)</TableCell>
+                            <TableCell align="right">Calories</TableCell>
+                            <TableCell align="right">Fat(g)</TableCell>
+                            <TableCell align="right">Carbs(g)</TableCell>
+                            <TableCell align="right">Protein(g)</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {props.ingredients.map((row) => (
+                            props.ingredientQuantity.map((ingredient) => (ingredient.name === row.name &&
+                                <Ingredient row={row} quantity={ingredient.quantity} recipeName={props.recipeName}
+                                            recipeText={props.recipeText} parentCallBack={handleCallback}/>))
+                        ))}
+                        <TableRow>
+
+                        <TableCell align="right"/>
+                        <TableCell align="right"/>
+                        <TableCell align="right">{props.energy}</TableCell>
+                        <TableCell align="right">{props.fat}</TableCell>
+                        <TableCell align="right">{props.carbs}</TableCell>
+                        <TableCell align="right">{props.protein}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>}
+        </div>
     );
 }
 export default IngredientList;

@@ -7,11 +7,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class IngredientRequestDto {
+public class RecipeIngredientResponseDto {
     private String ingredientName;
+    private String recipeName;
+    private int ingredientQuantity;
     private Float protein;
     private Float fat;
-    private Float Carbohydrate;
-    private Float Energy;
-    //private String url;
+    private Float carbohydrate;
+    private Float energy;
+
 }

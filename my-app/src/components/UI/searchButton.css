@@ -19,6 +19,7 @@
     border: none;
     border-radius: 100px;
     outline: none;
+    background-color: #e0dfdf;
 }
 
 .search-button {

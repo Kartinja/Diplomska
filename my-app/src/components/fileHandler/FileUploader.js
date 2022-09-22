@@ -1,4 +1,5 @@
 import React, {useRef} from "react";
+import {Button, Input} from "@mui/material";
 
 const FileUploader = ({onFileSelect}) => {
     const fileInput = useRef(null);
@@ -9,6 +10,8 @@ const FileUploader = ({onFileSelect}) => {
     }
     return(
         <div>
+
+
             <input type='file' onChange={handleFileInput}/>
             <button onClick={e=>fileInput.current && fileInput.current.click()}/>
         </div>
