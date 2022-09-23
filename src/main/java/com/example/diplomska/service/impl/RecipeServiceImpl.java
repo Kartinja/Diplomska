@@ -8,7 +8,6 @@ import com.example.diplomska.repository.model.Recipe;
 import com.example.diplomska.repository.model.RecipeIngredient;
 import com.example.diplomska.rest.dto.*;
 import com.example.diplomska.service.RecipeService;
-import com.sun.source.tree.ForLoopTree;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -80,7 +79,7 @@ public class RecipeServiceImpl implements RecipeService {
                 //ako ne postoi vo baza
                 String urlUsda = "https://api.nal.usda.gov/fdc/v1/foods/search?query=" + ingredient.getName() + "&pageSize=2&api_key=pfmU6uLGv9pUvJz9oocLidkY8cKDxLsV27c9cn7t";
                 UsdaResponseDto usdaResponseDto = restTemplate.getForObject(urlUsda, UsdaResponseDto.class);
-                ingredient.setApiID(usdaResponseDto.getFoods().get(0).getFdcId());
+                ingredient.setFdcId(usdaResponseDto.getFoods().get(0).getFdcId());
                 List<FoodNutrientDto> foodNutrients = usdaResponseDto.getFoods().get(0).getFoodNutrients();
                 for (FoodNutrientDto foodNutrient : foodNutrients) {
                     if (foodNutrient.getNutrientName().toLowerCase().contains("protein")) {

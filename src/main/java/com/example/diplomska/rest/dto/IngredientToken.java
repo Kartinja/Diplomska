@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class IngredientToken {
     private int numTokens;
-    private otherTagsDto otherTags;
+    private OtherTagsDto otherTags;
     private Object removed;
     private int start;
     private String tag;

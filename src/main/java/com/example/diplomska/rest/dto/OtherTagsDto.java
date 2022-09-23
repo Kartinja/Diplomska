@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class otherTagsDto {
+public class OtherTagsDto {
     private List<String> foodon;
     private List<String> hansard;
     private String hansardClosest;

@@ -22,7 +22,7 @@ public class Ingredient {
     private Float fat;
     private Float carbohydrate;
     private Float energy;
-    private int apiID;
+    private int fdcId;
 
 
     @ManyToMany
